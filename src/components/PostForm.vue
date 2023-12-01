@@ -7,21 +7,43 @@
         type="text" placeholder="Название">
     <input
         v-model="post.body"
-
         class="input"
         type="text" placeholder="Описание">
-    <button class="btn">Create</button>
+    <my-button
+        class="btn"
+        @click="createPost"
+    >
+      Create
+    </my-button>
+
+
+Aa2706002000
+
   </form>
 </template>
 
 <script>
+import MyButton from "@/components/UI/MyButton"
 export default {
+  components: {MyButton},
   data() {
     return {
       post: {
         title: "",
         body: "",
       }
+    }
+  },
+  methods: {
+    createPost() {
+      this.post.id = Date.now()
+      this.$emit('create', this.post)
+      this.post = {
+        title: "",
+        body: "",
+      }
+      this.title = ""
+      this.body = ""
     }
   }
 }
@@ -46,16 +68,4 @@ form {
 
 }
 
-.btn {
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px 15px;
-  color: aliceblue;
-  border: 3px solid teal;
-  background-color: grey;
-}
-
-.btn:hover {
-  background-color: darkorange;
-}
 </style>
