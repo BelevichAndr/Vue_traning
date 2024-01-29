@@ -1,31 +1,23 @@
 <template>
   <form @submit.prevent>
     <h4>Create post</h4>
-    <input
-        v-model="post.title"
-        class="input"
-        type="text" placeholder="Название">
-    <input
-        v-model="post.body"
-        class="input"
-        type="text" placeholder="Описание">
-    <my-button
-        class="btn"
-        @click="createPost"
-    >
-      Create
+
+    <my-input v-model="post.title" type="text" placeholder="Название"/>
+
+    <my-input v-model="post.body" type="text" placeholder="Описание"/>
+
+    <my-button class="btn" @click="createPost" style="align-self: flex-end">
+      <template v-slot:button-name> Сохранить </template>
     </my-button>
-
-
-Aa2706002000
 
   </form>
 </template>
 
 <script>
-import MyButton from "@/components/UI/MyButton"
+
+
 export default {
-  components: {MyButton},
+
   data() {
     return {
       post: {
@@ -50,13 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.input {
-  width: 100%;
-  border: 3px solid teal;
-  margin-top: 15px;
-  padding: 10px 15px;
-  color: aliceblue;
-}
+
 
 input::placeholder {
   color: aliceblue;

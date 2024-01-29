@@ -7,13 +7,16 @@
     </div>
 
     <div class="post__buttons">
-      <button>Delete</button>
+      <my-button @click="$emit('remove-post', post)">
+        <template v-slot:button-name> Удалить </template>
+      </my-button>
     </div>
 
   </div>
 </template>
 
 <script>
+
 export default {
   props: {
     post: {

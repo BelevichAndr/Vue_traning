@@ -1,9 +1,12 @@
 <script>
+export default {
+  name: "my-button"
+}
 </script>
 
 <template>
-  <button>
-    <slot></slot>
+  <button class="btn">
+    <slot name="button-name"></slot>
   </button>
 </template>
 
@@ -13,7 +16,7 @@
   padding: 10px 15px;
   color: aliceblue;
   border: 3px solid teal;
-  background-color: grey;
+  background-color: brown;
 }
 
 .btn:hover {

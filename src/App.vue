@@ -1,12 +1,21 @@
 <template>
-
   <div class="app">
-    <post-form
-        @create="createPost"
-    />
-    <post-list
-        :posts="posts"
-    />
+    <h1>Страница с постами</h1>
+
+    <div class="app__buttons">
+      <my-button @click="showDialog">
+        <template v-slot:button-name>
+          Создать Пост
+        </template>
+      </my-button>
+      <my-select v-model="selectedSort"/>
+    </div>
+
+
+    <my-dialog v-model:is_show="dialogVisible">
+      <post-form @create="createPost"/>
+    </my-dialog>
+    <post-list :posts="posts" @remove-post="removePost"/>
   </div>
 
 </template>
@@ -14,6 +23,7 @@
 <script>
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
+import axios from 'axios'
 
 export default {
 
@@ -23,17 +33,38 @@ export default {
 
   data() {
     return {
-      posts: [
-        {id: 1, title: "JS", body: `Описание поста 1`},
-        {id: 2, title: "JS", body: `Описание поста 2`},
-        {id: 3, title: "JS", body: `Описание поста 3`},
-      ],
+      posts: [],
+      dialogVisible: false,
+      selectedSort: "",
+      sortOptions: [
+        {value: "title", name: "По названию"},
+        {value: "body", name: "По описанию"},
+      ]
     }
   },
   methods: {
     createPost(post) {
       this.posts.push(post)
+      this.dialogVisible = false
     },
+    removePost(post) {
+      this.posts = this.posts.filter(post_item => post_item.id !== post.id)
+    },
+    showDialog() {
+      this.dialogVisible = true
+    },
+    async fetchPosts() {
+      try {
+        const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+        console.log(response)
+        response.data.forEach(object => this.posts.push(object))
+      } catch (error) {
+        alert("Ошибка")
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts()
   }
 }
 </script>
@@ -51,6 +82,12 @@ export default {
   padding: 20px;
   color: aliceblue;
 
+}
+
+.app__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0
 }
 
 </style>
