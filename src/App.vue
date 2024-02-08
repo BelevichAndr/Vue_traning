@@ -8,7 +8,7 @@
           Создать Пост
         </template>
       </my-button>
-      <my-select v-model="selectedSort"/>
+      <my-select v-model="selectedSort" :options="sortOptions"/>
     </div>
 
 
@@ -65,6 +65,13 @@ export default {
   },
   mounted() {
     this.fetchPosts()
+  },
+  watch: {
+    selectedSort(newValue) {
+      this.posts.sort((post1, post2) => {
+        return post1[newValue].localeCompare(post2[newValue])
+      })
+    }
   }
 }
 </script>
